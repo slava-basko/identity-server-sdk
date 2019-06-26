@@ -1,0 +1,24 @@
+{
+  "name": "slava-basko/identity-server-sdk",
+  "description": "SDK for Identity Server",
+  "authors": [
+    {
+      "name": "Slava Basko",
+      "email": "basko.slava@gmail.com"
+    }
+  ],
+  "keywords": ["sdk", "identity server"],
+  "type": "library",
+  "minimum-stability" : "stable",
+  "require": {
+    "php": ">=5.5",
+    "ocramius/proxy-manager": "2.2.2",
+    "zendframework/zend-json-server": "3.1.0",
+    "symfony/expression-language": "v4.3.1"
+  },
+  "autoload": {
+    "psr-4": {
+      "Is\\Sdk\\": "src/"
+    }
+  }
+}
