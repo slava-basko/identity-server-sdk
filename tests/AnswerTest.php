@@ -21,7 +21,8 @@ class AnswerTest extends TestCase
             [
                 'object.getOwnerId() == user.getId()'
             ],
-            new \Is\Sdk\Auth\User('qwe123', 'john.doe@gmail.com')
+            new \Is\Sdk\Auth\User('qwe123', 'john.doe@gmail.com'),
+            []
         );
 
         $result = $answer->applyRules([
@@ -43,7 +44,8 @@ class AnswerTest extends TestCase
             [
                 'object.getOwnerId() == user.getId()'
             ],
-            new \Is\Sdk\Auth\User('asd123', 'john.doe@gmail.com')
+            new \Is\Sdk\Auth\User('asd123', 'john.doe@gmail.com'),
+            []
         );
 
         $this->expectException(\Is\Sdk\Exceptions\PermissionException::class);
@@ -61,7 +63,8 @@ class AnswerTest extends TestCase
             [
                 'date.format("d") > 15'
             ],
-            new \Is\Sdk\Auth\User('asd123', 'john.doe@gmail.com')
+            new \Is\Sdk\Auth\User('asd123', 'john.doe@gmail.com'),
+            []
         );
 
         $this->expectException(\Is\Sdk\Exceptions\PermissionException::class);
@@ -83,7 +86,8 @@ class AnswerTest extends TestCase
             [
                 'user.getEmail() != "max.payne@gmail.com" || (user.getEmail() == "max.payne@gmail.com" && object.getId() in 1..10)'
             ],
-            new \Is\Sdk\Auth\User('zxc123', 'max.payne@gmail.com')
+            new \Is\Sdk\Auth\User('zxc123', 'max.payne@gmail.com'),
+            []
         );
 
         $this->expectException(\Is\Sdk\Exceptions\PermissionException::class);
@@ -101,7 +105,8 @@ class AnswerTest extends TestCase
             [
                 '"admin" in user.getRoles() || ("admin" not in user.getRoles() && date.format("d") > 15)'
             ],
-            new \Is\Sdk\Auth\User('qwe123', 'pavel.beg@gmail.com', ['manager'])
+            new \Is\Sdk\Auth\User('qwe123', 'pavel.beg@gmail.com', ['manager']),
+            []
         );
 
         $result = $answer->applyRules([
@@ -127,7 +132,8 @@ class AnswerTest extends TestCase
             [
                 'project.getOwner() == user.getId()'
             ],
-            new \Is\Sdk\Auth\User('879', 'pavel.beg@gmail.com', ['manager'])
+            new \Is\Sdk\Auth\User('879', 'pavel.beg@gmail.com', ['manager']),
+            []
         );
 
         $result = $answer->applyRules([
@@ -153,12 +159,42 @@ class AnswerTest extends TestCase
             [
                 'project.getOwner() == user.getId()'
             ],
-            new \Is\Sdk\Auth\User('7896', 'pavel.beg@gmail.com', ['manager'])
+            new \Is\Sdk\Auth\User('7896', 'pavel.beg@gmail.com', ['manager']),
+            []
         );
 
         $this->expectException(\Is\Sdk\Exceptions\PermissionException::class);
         $answer->applyRules([
             'project' => $project
         ]);
+    }
+
+    public function test_use_case_8()
+    {
+        $project = new class {
+            public function getId() {
+                return 12345;
+            }
+
+            public function getOwner() {
+                return 879;
+            }
+        };
+
+        $answer = new \Is\Sdk\Value\Answer(
+            true,
+            [
+                'project.getId() in aces["project"]'
+            ],
+            new \Is\Sdk\Auth\User('7896', 'pavel.beg@gmail.com', ['manager']),
+            [
+                'project' => [12345, 67890]
+            ]
+        );
+
+        $result = $answer->applyRules([
+            'project' => $project
+        ]);
+        $this->assertFalse($result);
     }
 }

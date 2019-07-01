@@ -29,16 +29,23 @@ class Answer implements \JsonSerializable
     private $user;
 
     /**
+     * @var array
+     */
+    private $aces;
+
+    /**
      * Answer constructor.
      * @param bool $answer
      * @param array $rules
      * @param User $user
+     * @param array $aces
      */
-    public function __construct($answer, array $rules = [], User $user)
+    public function __construct($answer, array $rules = [], User $user, array $aces)
     {
         $this->answer = $answer;
         $this->rules = $rules;
         $this->user = $user;
+        $this->aces = $aces;
     }
 
     /**
@@ -49,7 +56,8 @@ class Answer implements \JsonSerializable
         return [
             'answer' => $this->answer,
             'rules' => $this->rules,
-            'user' => $this->user
+            'user' => $this->user,
+            'aces' => $this->aces
         ];
     }
 
@@ -85,7 +93,8 @@ class Answer implements \JsonSerializable
     {
         $context = array_merge([
             'date' => new \DateTime(),
-            'user' => $this->user
+            'user' => $this->user,
+            'aces' => $this->aces
         ], $context);
 
         $expressionLanguage = new ExpressionLanguage();
