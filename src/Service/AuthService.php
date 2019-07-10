@@ -48,6 +48,6 @@ class AuthService
             $token = $token->getToken();
         }
         $data = $this->authService->checkPermission($permissionAlias, $token);
-        return new Answer($data['answer'], $data['rules'], User::fromArray($data['user']));
+        return new Answer($data['answer'], $data['rules'], User::fromArray($data['user']), $data['aces']);
     }
 }
