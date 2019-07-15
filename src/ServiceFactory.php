@@ -15,6 +15,7 @@ use Is\Sdk\Service\Interfaces\UserService;
 use ProxyManager\Factory\RemoteObject\Adapter\JsonRpc;
 use ProxyManager\Factory\RemoteObjectFactory;
 use Zend\Json\Server\Client;
+use Is\Sdk\Service\Interfaces\EntityEntryService;
 
 class ServiceFactory
 {
@@ -84,4 +85,14 @@ class ServiceFactory
     {
         return new AuthService(self::createRemoteObjectFactory($jsonRpcUrl)->createProxy(JsonRpcAuthService::class));
     }
+
+    /**
+     * @param $jsonRpcUrl
+     * @return EntityEntryService
+     */
+    public static function createEntityEntryService($jsonRpcUrl)
+    {
+        return self::createRemoteObjectFactory($jsonRpcUrl)->createProxy(EntityEntryService::class);
+    }
+
 }
