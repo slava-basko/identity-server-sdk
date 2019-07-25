@@ -37,4 +37,10 @@ interface UserService
      * @return bool
      */
     public function delete($email);
+
+    /**
+     * @param string $email
+     * @return array
+     */
+    public function getUser($email);
 }
