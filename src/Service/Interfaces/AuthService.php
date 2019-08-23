@@ -13,9 +13,11 @@ interface AuthService
     /**
      * @param string $email
      * @param string $password
-     * @return Token
+     * @param string|bool $ip
+     * @param string|bool $userAgent
+     * @return mixed
      */
-    public function login($email, $password);
+    public function login($email, $password, $ip = false, $userAgent = false);
 
     /**
      * @param string $permissionAlias
