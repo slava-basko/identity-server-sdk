@@ -13,10 +13,10 @@ interface AuthService
     /**\
      * @param $email
      * @param $password
-     * @param $additionalOptionsLoginUser
+     * @param array|null $additionalData
      * @return mixed
      */
-    public function login($email, $password, $additionalOptionsLoginUser = null);
+    public function login($email, $password, $additionalData = null);
 
     /**
      * @param string $permissionAlias
