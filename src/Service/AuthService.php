@@ -29,13 +29,12 @@ class AuthService
     /**
      * @param $email
      * @param $password
-     * @param bool $ip
-     * @param bool $userAgent
+     * @param $additionalOptionsLoginUser
      * @return Token
      */
-    public function login($email, $password, $ip = false, $userAgent = false)
+    public function login($email, $password, $additionalOptionsLoginUser = null)
     {
-        $data = $this->authService->login($email, $password, $ip, $userAgent);
+        $data = $this->authService->login($email, $password, $additionalOptionsLoginUser);
         return Token::fromArray($data);
     }
 

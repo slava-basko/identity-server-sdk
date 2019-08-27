@@ -10,14 +10,13 @@ use Is\Sdk\Value\Answer;
 
 interface AuthService
 {
-    /**
-     * @param string $email
-     * @param string $password
-     * @param string|bool $ip
-     * @param string|bool $userAgent
+    /**\
+     * @param $email
+     * @param $password
+     * @param $additionalOptionsLoginUser
      * @return mixed
      */
-    public function login($email, $password, $ip = false, $userAgent = false);
+    public function login($email, $password, $additionalOptionsLoginUser = null);
 
     /**
      * @param string $permissionAlias
